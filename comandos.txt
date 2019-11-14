@@ -1,0 +1,52 @@
+			--COMANDOS--
+	·AVG(....)
+	·group by
+	·order by
+	·INNER JOIN .... ON .... = .... 
+	·WHERE ....
+
+--------------------------------------------------------------------------
+			--SOLUCIONES--
+
+1-listo
+SELECT Count(flightID)
+FROM flights
+
+2-listo
+SELECT Origin, AVG (ArrDelay), AVG (DepDelay) 
+FROM flights
+group by Origin
+
+3-listo
+SELECT Origin, colYear, colMonth, ArrDelay
+FROM flights 
+order by Origin, colYear asc
+
+4-listo
+SELECT City, colYear, colMonth, AVG(ArrDelay)
+FROM flights
+INNER JOIN usairlineflights2.usairports ON flights.Origin = usairports.IATA
+group by City, colYear, colMonth
+order by City, colYear, colMonth
+
+5-listo
+SELECT UniqueCarrier, colYear, colMonth, AVG(ArrDelay) as avg_delay, SUM(Cancelled) as Cancelled
+FROM flights
+where Cancelled > 0 
+group by UniqueCarrier, colYear, colMonth 
+order by Cancelled desc, colMonth asc, colYear asc
+
+6-listo
+SELECT TailNum, SUM(Distance) as TotalDistance
+FROM flights
+where TailNum != ""
+group by TailNum 
+order by TotalDistance desc
+LIMIT 10
+
+7
+SELECT UniqueCarrier, AVG(ArrDelay) as avgDelay
+FROM flights
+group by UniqueCarrier
+having avgDelay >=10
+order by avgDelay desc
